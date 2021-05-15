@@ -77,11 +77,38 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Podaj imie: ");
         String name = scanner.nextLine();
+        String nameNew = "";
+        char zn;
+        for (int h = 0; h < name.length(); h++) {
+            zn = name.charAt(h);
+            if (h == 0) {
+                zn = Character.toUpperCase(zn);
+            } else {
+                zn = Character.toLowerCase(zn);
+            }
+            nameNew = nameNew + zn;
+
+        }
+        name = nameNew;
 
         System.out.println("Podaj nazwisko: ");
         String lastName = scanner.nextLine();
+        String lastNew = "";
+        for (int h = 0; h < lastName.length(); h++) {
+            zn = lastName.charAt(h);
+            if (h == 0) {
+                zn = Character.toUpperCase(zn);
+            } else {
+                zn = Character.toLowerCase(zn);
+            }
+            lastNew = lastNew + zn;
+
+        }
+        lastName = lastNew;
+
         System.out.println("Podaj plec (kobieta: \"K\", mezczyzna: \"M\"): ");
         String genderr = scanner.nextLine();
+        genderr = genderr.toUpperCase();
 
         System.out.println("Podaj nr dzialu: ");
         int depNr = scanner.nextInt();
