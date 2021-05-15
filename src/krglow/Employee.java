@@ -108,12 +108,12 @@ public class Employee {
         }
     }
 
-    public void salaryIncrease(int percent) {
+    public void salaryIncrease(float percent) {
         percent += (chlidrens * 2);
         if (maritalStatus == true) {
             percent += 3;
         }
-        salary = salary * (percent / 100);
+        salary += salary * (percent / 100);
     }
 
     public Employee(String name, String lastName, char gender, int departNr, float salary, int age, int chlidrens, boolean maritalStatus) {
