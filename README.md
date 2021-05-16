@@ -1,3 +1,3 @@
 # Java-Project
 
-Program utworzony w ramach projektu zaliczeniowego w wersji konsolowej, wspomagający organizacje w firmie.
+Program wspomagający organizacje w firmie utworzony w ramach projektu zaliczeniowego, napisany w wersji konsolowej,.
