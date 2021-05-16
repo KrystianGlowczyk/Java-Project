@@ -90,7 +90,7 @@ public class Employee {
     }
 
     public void truncatedDisplay() {
-        System.out.println("Imie: " + name + " Nazwisko: " + lastName + " Wynagrodzenie: " + salary);
+        System.out.format("Imie: %s, Nazwisko: %s, Wynagrodzenie: %.2f PLN.\n", name, lastName, salary);
     }
 
     public void specialDisplay() {

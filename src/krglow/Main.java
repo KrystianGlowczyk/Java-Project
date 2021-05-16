@@ -1,12 +1,10 @@
 package krglow;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.PrintWriter;
+import java.io.*;
 import java.util.*;
 
 public class Main {
-    public static void main(String[] args) throws FileNotFoundException, InterruptedException {
+    public static void main(String[] args) throws IOException, InterruptedException {
         List<Employee> employees = new ArrayList<>();
         employees.add(new Employee("Jan", "Kowalski", 'M', 4, 5400, 32, 2, true));
         employees.add(new Employee("Antek", "Dabrowski", 'M', 4, 6400, 52, 5, true));
@@ -17,16 +15,16 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         firstMenu();
         int choice = scanner.nextInt();
-        while (choice != 8) {
+        while (choice != 9) {
             switch (choice) {
                 case 1:
                     choiceOne(employees);
-                    System.out.println("\n\n Wybierz opcje (1-8): ");
+                    System.out.println("\n\n Wybierz opcje (1-9): ");
                     choice = scanner.nextInt();
                     break;
                 case 2:
                     employees = choiceTwo(employees);
-                    System.out.println("\n\n Wybierz opcje (1-8): ");
+                    System.out.println("\n\n Wybierz opcje (1-9): ");
                     choice = scanner.nextInt();
                     break;
                 case 3:
@@ -34,32 +32,38 @@ public class Main {
                     System.out.println("Podaj nazwe pliku: ");
                     String name = scanner.nextLine();
                     choiceThree(employees, name);
-                    System.out.println("\n\n Wybierz opcje (1-8): ");
+                    System.out.println("\n\n Wybierz opcje (1-9): ");
                     choice = scanner.nextInt();
                     break;
                 case 4:
                     choiceFour(employees);
-                    System.out.println("\n\n Wybierz opcje (1-8): ");
+                    System.out.println("\n\n Wybierz opcje (1-9): ");
                     choice = scanner.nextInt();
                     break;
                 case 5:
                     choiceFive(employees);
-                    System.out.println("\n\n Wybierz opcje (1-8): ");
+                    System.out.println("\n\n Wybierz opcje (1-9): ");
                     choice = scanner.nextInt();
                     break;
                 case 6:
-                    secondMenu();
-                    employees = choiceSix(employees);
+                    choiceSix(employees);
+                    System.out.println("\n\n Wybierz opcje (1-9): ");
                     choice = scanner.nextInt();
                     break;
                 case 7:
-                    choiceSeven();
-                    System.out.println("\n\n Wybierz opcje (1-8): ");
+                    secondMenu();
+                    employees = choiceSeven(employees);
+                    System.out.println("\n\n Wybierz opcje (1-9): ");
+                    choice = scanner.nextInt();
+                    break;
+                case 8:
+                    choiceEight();
+                    System.out.println("\n\n Wybierz opcje (1-9): ");
                     choice = scanner.nextInt();
                     break;
                 default:
                     System.out.println("Wpisales zly numer:");
-                    System.out.println("\n\n Wybierz opcje (1-8): ");
+                    System.out.println("\n\n Wybierz opcje (1-9): ");
                     choice = scanner.nextInt();
                     break;
             }
@@ -106,12 +110,30 @@ public class Main {
         }
         lastName = lastNew;
 
+        boolean flag = true;
+
         System.out.println("Podaj plec (kobieta: \"K\", mezczyzna: \"M\"): ");
         String genderr = scanner.nextLine();
         genderr = genderr.toUpperCase();
 
+        if (!(genderr.equalsIgnoreCase("K"))) {
+            if (!(genderr.equalsIgnoreCase("M"))) {
+                while (flag) {
+                    System.out.println("Blad wpisz plec jeszcze raz.");
+                    genderr = scanner.nextLine();
+                    genderr = genderr.toUpperCase();
+
+                    if (genderr.equalsIgnoreCase("K") || genderr.equalsIgnoreCase("M")) {
+                        flag = false;
+                    }
+                }
+
+            }
+        }
+
         System.out.println("Podaj nr dzialu: ");
         int depNr = scanner.nextInt();
+
 
         System.out.println("Podaj wynagrodzenie: ");
         float salary = scanner.nextFloat();
@@ -238,7 +260,41 @@ public class Main {
 
     }
 
-    public static List<Employee> choiceSix(List<Employee> employees) throws FileNotFoundException, InterruptedException {
+    public static void choiceSix(List<Employee> employees) throws IOException {
+
+
+        PrintWriter fileHTML = null;
+
+        try {
+
+            fileHTML = new PrintWriter(new FileWriter("/Users/krystek/Desktop/Employees.html"));
+
+
+            fileHTML.println("<html><body>");
+            fileHTML.println("<table>");
+            fileHTML.println("<html><body>");
+            fileHTML.println("<tr><td>\"Imie\"</td><td>\"Nazwisko\"</td><td>\"Plec\"</td><td>\"Nr Dzialu\"</td><td>\"Wynagrodzenie\"</td><td>\"Wiek\"</td><td>\"Liczba Dzieci\"</td><td>\"Stan Cywilny\"</td></tr>");
+
+            for (Employee x : employees) {
+                fileHTML.println("<tr><td>" + x.getName() + "</td><td>" + x.getLastName() + "</td><td>" + x.getGender() + "</td><td>"
+                        + x.getDepartNr() + "</td><td>" + x.getSalary() + "</td><td>" + x.getAge() + "</td><td>"
+                        + x.getChlidrens() + "</td><td>" + x.isMaritalStatus() + "</td></tr>");
+            }
+
+            fileHTML.println("</table>");
+            fileHTML.println("</body></html>");
+            System.out.println("Dane zostaly wyeksportowane.");
+
+        } finally {
+            if (fileHTML != null) {
+                fileHTML.close();
+            }
+        }
+
+
+    }
+
+    public static List<Employee> choiceSeven(List<Employee> employees) throws FileNotFoundException, InterruptedException {
         Scanner scanner = new Scanner(System.in);
         String select = scanner.nextLine();
         select = select.toUpperCase();
@@ -334,7 +390,7 @@ public class Main {
         return employees;
     }
 
-    public static void choiceSeven() {
+    public static void choiceEight() {
 
         System.out.println("Program wspomagajacy organizacje w firmie.");
         System.out.println("Autor: Krystian Glowczyk");
@@ -511,6 +567,8 @@ public class Main {
             }
         }
 
+        System.out.println("Dane w pliku zostaly posortowane wedlug nazwiska.");
+
     }
 
     public static void selectI(List<Employee> employees, boolean flag) throws FileNotFoundException {
@@ -550,6 +608,7 @@ public class Main {
                 file.close();
             }
         }
+        System.out.println("Dane w pliku zostaly posortowane wedlug wynagrodzenia.");
 
     }
 
@@ -562,12 +621,12 @@ public class Main {
         System.out.println("** 3. Eksport pracownikow do pliku tekstowego.            **");
         System.out.println("** 4. Usun pracownika.                                    **");
         System.out.println("** 5. Edytuj pracownika.                                  **");
-        System.out.println("** 6. Dodatkowe funkcje.                                  **");
-        System.out.println("** 7. INFO                                                **");
-        System.out.println("** 8. Zakoncz program.                                    **");
+        System.out.println("** 6. Eksport pracownikow do pliku html.                  **");
+        System.out.println("** 7. Dodatkowe funkcje.                                  **");
+        System.out.println("** 8. INFO                                                **");
+        System.out.println("** 9. Zakoncz program.                                    **");
         System.out.println("************************************************************");
-        System.out.println("************************************************************");
-        System.out.println("\n\n Wybierz opcje (1-8): ");
+        System.out.println("\n\n Wybierz opcje (1-9): ");
 
     }
 
